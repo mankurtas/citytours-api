@@ -11,7 +11,6 @@ const validate = (req, res, next) => {
         .array()
         .map((error) => error.msg)
         .join("; ");
-      console.log("Validation errors:", errors.array());
       throw new AppError(errorString, 400);
     }
 

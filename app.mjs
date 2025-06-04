@@ -1,5 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from 'cors'
+
 
 import authRoutes from "./routes/authRoutes.mjs";
 
@@ -7,6 +9,15 @@ const app = express();
 
 // Body parser
 app.use(express.json());
+
+//cors
+cors
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 //cokie parser
 app.use(cookieParser());
