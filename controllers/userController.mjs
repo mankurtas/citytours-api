@@ -1,6 +1,7 @@
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import AppError from "../utils/appError.mjs";
+import { getUserByID } from "../modules/userModules.mjs";
 
 //modules
 import { createUser, getUserByUserName } from "../modules/userModules.mjs";
