@@ -44,6 +44,14 @@ export const register = async (req, res, next) => {
       throw new AppError("User not Created", 400);
     }
 
+     //User log ins after registration
+    const token = signToken(createdUser.id);
+    
+    sendTokenCookie(token, res);
+
+
+    createdUser.password = undefined;
+
     res.status(201).json({
       status: "Success",
       data: { userId: createdUser.id },
