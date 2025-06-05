@@ -83,3 +83,51 @@ export const login = async (req, res, next) => {
     next(new AppError(error.message || "Login failed", 500));
   }
 };
+
+//protect
+
+export const protect = async (req, res, next) => {
+  try {
+    let token = req.cookies?.jwt;
+
+    if (!token) {
+      throw new Error("You are not loged in.", 401);
+    }
+
+    //token verify
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // console.log(decoded);
+
+    //check if user exist
+    const currentUser = await getUserByID(decoded.id);
+
+    if (!currentUser) {
+      throw new Error("User not exist");
+    }
+
+    //grant accees to protected rout, add user to req object
+    req.user = currentUser;
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+//get authenticateduser
+
+export const getAuthenticatedUser = (req,res ) => {
+
+  try {
+    const user = req.user;
+    res.status(200).json({
+      status: "success",
+      data:user
+    });
+
+  } catch (error) {
+    throw new Error(error)
+  }
+}
