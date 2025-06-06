@@ -85,6 +85,16 @@ export const login = async (req, res, next) => {
   }
 };
 
+//logout
+
+export const logout = (req, res) => {
+  return res.clearCookie('jwt')
+  .status(200)
+  .json({
+    message: "You are logged out",
+  })
+}
+
 //protect
 
 export const protect = async (req, res, next) => {
