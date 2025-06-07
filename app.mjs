@@ -4,6 +4,7 @@ import cors from 'cors'
 
 
 import authRoutes from "./routes/authRoutes.mjs";
+import toursRoutes from "./routes/toursRoutes.mjs";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/tours", toursRoutes);
 
 
 //centralized errors handler
