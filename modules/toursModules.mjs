@@ -14,6 +14,10 @@ export const allTours = async () => {
 export const insertNewTour = async (newTour) => {
   const { title, picture, duration_hours, duration_minutes, dates, price } = newTour;
 
+  if (!title || !picture || !Array.isArray(dates) || isNaN(price)) {
+      throw new Error("Missing or invalid tour fields");
+    }
+
   const [tour] = await sql`
       INSERT into tours
       (title, picture, duration_hours, duration_minutes, dates, price)
@@ -23,4 +27,18 @@ export const insertNewTour = async (newTour) => {
       `;
 
   return tour;
+};
+
+//Update tour
+export const updateTourById = async (id, upTour) => {
+  const columns = Object.keys(upTour);
+
+  const [updatedTour] = await sql`
+    UPDATE tours
+    SET ${sql(upTour, columns)}
+    WHERE id = ${id} 
+    RETURNING *
+    `;
+
+  return updatedTour;
 };
