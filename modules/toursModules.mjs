@@ -42,3 +42,15 @@ export const updateTourById = async (id, upTour) => {
 
   return updatedTour;
 };
+
+
+// Delete tour
+
+export const deleteTourById = async (id) => {
+  const [tour] = await sql`
+    DELETE FROM tours
+    WHERE tours.id = ${id} 
+    `;
+
+  return tour;
+};

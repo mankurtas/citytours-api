@@ -1,6 +1,6 @@
 import AppError from "../utils/appError.mjs";
 
-import { allTours, insertNewTour, updateTourById } from "../modules/toursModules.mjs";
+import { allTours, insertNewTour, updateTourById, deleteTourById} from "../modules/toursModules.mjs";
 
 // get all tours
 
@@ -58,5 +58,24 @@ export const updateTour = async (req, res, next) => {
     });
   } catch (error) {
     next(new AppError(error.message || "Failed to update tour by ID", 500));
+  }
+};
+
+//delete tour
+
+export const deleteTour = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    
+
+    const deletedTour = await deleteTourById(id);
+    return res.status(200).json({
+      status: "success",
+      message: "Tour deleted",
+      data: deletedTour,
+    });
+  } catch (error) {
+    next(new AppError(error.message || "Failed to delete tour by ID", 500));
   }
 };
